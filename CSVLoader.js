@@ -3,8 +3,28 @@ function CSVLoader () {
 	this._csvDelimiter = ",";
 }
 
+/**
+ * Load stringData into our CSV object
+ * @param {string} csv
+ * @param {string} delimiter(OPTIONAL)
+ */
 CSVLoader.prototype.LoadString = function (csv, delimiter) {
+	this._csvString =  csv;
+	this._csvDelimiter = (delimiter || ",");
+}
 
+/**
+ * Make an ajax call to fileURL and load string data into loader object
+ * @param {string} filename
+ * @param {string} delimiter(OPTIONAL)
+ */
+CSVLoader.prototype.LoadFile = function (filename, delimiter) {
+	this._csvDelimiter = (delimiter || ",");
+	var ajax = new XMLHttpRequest();
+	ajax.open("GET", filename, true);
+	ajax.onreadystatechange = function() {
+        this._csvString = ajax.responseText;
+    };
 }
 
 /**
