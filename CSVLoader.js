@@ -3,12 +3,21 @@ function CSVLoader () {
 	this._csvDelimiter = ",";
 }
 
+
+CSVLoader.prototype.getArray = function () {
+	return this._CSVToArray(this._csvString);
+}
+
+CSVLoader.prototype.getObject = function() {
+	return this._ArrayToObject(this._CSVToArray());	
+}
+
 /**
  * Load stringData into our CSV object
  * @param {string} csv
  * @param {string} delimiter(OPTIONAL)
  */
-CSVLoader.prototype.LoadString = function (csv, delimiter) {
+CSVLoader.prototype.LoadString = function ( csv, delimiter ) {
 	this._csvString =  csv;
 	this._csvDelimiter = (delimiter || ",");
 }
@@ -18,7 +27,7 @@ CSVLoader.prototype.LoadString = function (csv, delimiter) {
  * @param {string} filename
  * @param {string} delimiter(OPTIONAL)
  */
-CSVLoader.prototype.LoadFile = function (filename, delimiter) {
+CSVLoader.prototype.LoadFile = function ( filename, delimiter ) {
 	this._csvDelimiter = (delimiter || ",");
 	var ajax = new XMLHttpRequest();
 	ajax.open("GET", filename, true);
@@ -33,7 +42,7 @@ CSVLoader.prototype.LoadFile = function (filename, delimiter) {
  * @param  {2D Array} my2dArray
  * @return {Object}
  */
-CSVLoader.prototype._ArrayToObject = function (my2dArray) {
+CSVLoader.prototype._ArrayToObject = function ( my2dArray ) {
     var myObject = {};
     for(var y = 0; y < my2dArray[0].length; y++) {
         myObject[my2dArray[0][y]] = [];
@@ -54,7 +63,7 @@ CSVLoader.prototype._ArrayToObject = function (my2dArray) {
  * @param  {string} strDelimiter (OPTIONAL)
  * @return {2D Array}
  */
-CSVLoader.prototype._CSVToArray = function ( strData, strDelimiter ){
+CSVLoader.prototype._CSVToArray = function ( strData, strDelimiter  ){
     strDelimiter = (strDelimiter || ",");
     var objPattern = new RegExp(
         (
